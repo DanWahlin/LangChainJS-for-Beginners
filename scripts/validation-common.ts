@@ -49,7 +49,7 @@ export const SERVER_FILES = [
 export const SKIP_FILES = [
   {
     file: "temperature-lab.ts",
-    reason: "Uses temperature=0 which is not supported by all model providers (e.g., GitHub Models)",
+    reason: "Uses temperature=0 which is not supported by all model providers (e.g., some Microsoft Foundry models)",
   },
 ];
 

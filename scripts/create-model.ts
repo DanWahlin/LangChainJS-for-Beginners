@@ -2,7 +2,7 @@
  * Shared Model Configuration Utilities
  *
  * This module provides helper functions to create LangChain model instances
- * with proper configuration for both GitHub Models and Microsoft Foundry.
+ * with proper configuration for Microsoft Foundry.
  *
  * Usage:
  *   import { createChatModel, createEmbeddings } from "@/scripts/create-model.js";
@@ -13,10 +13,9 @@
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 
 /**
- * Creates a ChatOpenAI instance configured for GitHub Models or Microsoft Foundry
+ * Creates a ChatOpenAI instance configured for Microsoft Foundry
  *
- * Automatically detects Azure endpoints and adds the required deployment path.
- * Works seamlessly with GitHub Models endpoints as well.
+ * Uses `AI_ENDPOINT`, `AI_API_KEY`, and `AI_MODEL` from the environment.
  *
  * @param options - Optional ChatOpenAI configuration overrides
  * @returns Configured ChatOpenAI instance
@@ -31,10 +30,9 @@ export function createChatModel(options?: ConstructorParameters<typeof ChatOpenA
 }
 
 /**
- * Creates an OpenAIEmbeddings instance configured for GitHub Models or Microsoft Foundry
+ * Creates an OpenAIEmbeddings instance configured for Microsoft Foundry
  *
- * Automatically detects Azure endpoints and adds the required deployment path.
- * Works seamlessly with GitHub Models endpoints as well.
+ * Uses `AI_ENDPOINT`, `AI_API_KEY`, and `AI_EMBEDDING_MODEL` from the environment.
  *
  * @param options - Optional OpenAIEmbeddings configuration overrides
  * @returns Configured OpenAIEmbeddings instance

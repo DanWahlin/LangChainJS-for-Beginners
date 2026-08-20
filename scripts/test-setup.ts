@@ -40,7 +40,7 @@ async function testSetup() {
     console.log("1. Check your AI_API_KEY in .env file");
     console.log("2. Verify the AI_ENDPOINT is correct");
     console.log("3. Ensure the AI_MODEL is valid for your provider");
-    console.log("4. Verify the token/key has no extra spaces");
+    console.log("4. Verify the API key has no extra spaces");
   }
 }
 

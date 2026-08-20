@@ -35,9 +35,9 @@ A message type representing responses from the AI model. AIMessages are typicall
 
 ### API Key
 
-A secret credential used to authenticate requests to AI provider services (OpenAI, Azure, Anthropic, etc.). API keys should always be stored in environment variables, never hardcoded in your source code.
+A secret credential used to authenticate requests to AI provider services (Microsoft Foundry, OpenAI, Anthropic, etc.). API keys should always be stored securely.
 
-**Example**: `AI_API_KEY=ghp_abc123...`
+**Example**: `AI_API_KEY=your_microsoft_foundry_api_key`
 
 **See**: [Course Setup](./00-course-setup/README.md)
 

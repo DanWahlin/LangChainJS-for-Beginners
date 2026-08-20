@@ -40,9 +40,8 @@ Validates all code examples in the course when explicitly requested. **Does not 
 - ❌ Minor formatting changes
 
 **Requirements:**
-- Uses `AI_API_KEY`, `AI_ENDPOINT`, and `AI_MODEL` secrets
-- Falls back to `GITHUB_TOKEN` and default GitHub Models endpoint if not configured
-- By default, uses GitHub Models (free) - automatically available in GitHub Actions
+- Uses Microsoft Foundry `AI_API_KEY`, `AI_ENDPOINT`, and `AI_MODEL` repository secrets
+- There is no default endpoint — configure secrets before running validation
 
 ## Running Locally
 
@@ -60,20 +59,16 @@ npm run validate
 
 **Note:** You need `AI_API_KEY`, `AI_ENDPOINT`, and `AI_MODEL` environment variables set. See [Course Setup](../../00-course-setup/README.md) for details.
 
-## GitHub Actions Secrets Setup (Optional)
+## GitHub Actions Secrets Setup
 
-By default, GitHub Actions will use:
-- `GITHUB_TOKEN` (built-in) → Falls back for `AI_API_KEY`
-- `https://models.inference.ai.azure.com` → Default for `AI_ENDPOINT`
-- `gpt-5-mini` → Default for `AI_MODEL`
-
-**To use a different provider in CI/CD**, add these secrets to your repository:
+Configure Microsoft Foundry credentials as repository secrets:
 
 1. Go to **Settings** → **Secrets and variables** → **Actions**
 2. Add repository secrets:
-   - `AI_API_KEY`: Your API key (GitHub token, Azure key, or OpenAI key)
-   - `AI_ENDPOINT`: Your endpoint URL (optional if using defaults)
-   - `AI_MODEL`: Your model name (optional if using defaults)
+   - `AI_API_KEY`: Your Microsoft Foundry API key
+   - `AI_ENDPOINT`: Your Microsoft Foundry endpoint URL (include `/openai/v1`)
+   - `AI_MODEL`: Your chat model name (defaults to `gpt-5-mini` if omitted)
+   - `AI_EMBEDDING_MODEL`: Your embedding model name (defaults to `text-embedding-3-small` if omitted)
 
 ## Validation Details
 

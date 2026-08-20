@@ -347,7 +347,6 @@ You can control how the AI responds by adjusting parameters. These can vary by p
   - Use for: Creative writing, brainstorming
 
 > **⚠️ Provider and Model Differences**:
-> - **GitHub Models (OpenAI)**: Supports 0.0 to 2.0 for most models
 > - **Microsoft Foundry**: Generally limits temperature to 0.0-1.0 depending upon the model
 > - **Some models** (like gpt-5-mini): May only support the default temperature value (1) and reject other values
 >
@@ -884,31 +883,31 @@ LangChain.js provides `initChatModel()` for provider-agnostic initialization. Th
 - 🎯 **Provider-Agnostic Code**: Write once, work with any standard provider
 
 **When to Use `ChatOpenAI` (This Course)**:
-- ✅ **GitHub Models**: Custom endpoints require specific configuration
-- ✅ **Azure OpenAI**: Non-standard API paths work better with ChatOpenAI
-- ✅ **Learning**: More explicit and easier to understand
+- ✅ **Microsoft Foundry**: OpenAI-compatible `/openai/v1` endpoint via `configuration.baseURL`
+- ✅ **Course env vars**: Uses `AI_API_KEY`, `AI_ENDPOINT`, and `AI_MODEL` (not `AZURE_OPENAI_*`)
+- ✅ **Learning**: More explicit and matches every other example
 - ✅ **Single Provider**: When you're primarily using one provider
+
+> **Note**: `initChatModel("azure_openai:...")` creates `AzureChatOpenAI` and expects `AZURE_OPENAI_*` variables. That is not how this course talks to Microsoft Foundry.
 
 ### Example: Provider-Agnostic Patterns
 
 **Code**: [`code/04-init-chat-model.ts`](./code/04-init-chat-model.ts)  
 
 ```typescript
-import { initChatModel } from "langchain/chat_models/universal";
+import { initChatModel } from "langchain";
 import { ChatOpenAI } from "@langchain/openai";
 
 // Switching between different provider types (conceptual)
-const openaiModel = await initChatModel("gpt-5-mini", {
-  modelProvider: "openai",
+const openaiModel = await initChatModel("openai:gpt-5-mini", {
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const anthropicModel = await initChatModel("claude-3-5-sonnet-20241022", {
-  modelProvider: "anthropic",
+const anthropicModel = await initChatModel("anthropic:claude-sonnet-4-6", {
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-// Recommended for this course (GitHub Models/Azure)
+// Recommended for this course (Microsoft Foundry)
 const model = new ChatOpenAI({
   model: process.env.AI_MODEL,
   configuration: { baseURL: process.env.AI_ENDPOINT },
@@ -924,9 +923,9 @@ const model = new ChatOpenAI({
 
 | Feature | `ChatOpenAI` (Recommended) | `initChatModel()` |
 |---------|-------------|-------------------|
-| **Custom Endpoints** | ✅ Excellent | ⚠️ Limited |
+| **Microsoft Foundry `/openai/v1`** | ✅ Explicit via `configuration.baseURL` | ⚠️ Not a match for `azure_openai` (uses `AzureChatOpenAI`) |
 | **Type Safety** | ✅ Excellent | ✅ Good |
 | **Learning Curve** | ✅ Easier | 🔄 Moderate |
-| **Use Case** | Single provider or custom endpoints | Multiple standard providers |
+| **Use Case** | This course's Foundry setup, or one provider | Switching between provider types |
 
-**For this course**: Stick with `ChatOpenAI`. It's more explicit and works best with GitHub Models and Azure OpenAI.
+**For this course**: Stick with `ChatOpenAI`. It matches Microsoft Foundry's OpenAI-compatible endpoint and the rest of the examples.

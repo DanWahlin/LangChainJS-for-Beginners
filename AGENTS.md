@@ -57,28 +57,12 @@ cp .env.example .env
 
 ### AI Provider Configuration
 
-The course supports multiple AI providers (no code changes needed - just update `.env`):
+This course uses **Microsoft Foundry**. Configure `.env` with your project credentials:
 
-**GitHub Models** (Free - recommended for learning):
+**Microsoft Foundry**:
 ```bash
-AI_API_KEY=your_github_personal_access_token
-AI_ENDPOINT=https://models.inference.ai.azure.com
-AI_MODEL=gpt-5-mini
-AI_EMBEDDING_MODEL=text-embedding-3-small
-```
-
-**Microsoft Foundry** (Production):
-```bash
-AI_API_KEY=your_azure_openai_api_key
+AI_API_KEY=your_microsoft_foundry_api_key
 AI_ENDPOINT=https://your-resource.openai.azure.com/openai/v1
-AI_MODEL=gpt-5-mini
-AI_EMBEDDING_MODEL=text-embedding-3-small
-```
-
-**OpenAI Direct**:
-```bash
-AI_API_KEY=your_openai_api_key
-AI_ENDPOINT=https://api.openai.com/v1
 AI_MODEL=gpt-5-mini
 AI_EMBEDDING_MODEL=text-embedding-3-small
 ```
@@ -351,7 +335,7 @@ npm test
 
 ```typescript
 // ❌ WRONG - Hardcoded
-const apiKey = "ghp_abc123";
+const apiKey = "sk-abc123";
 
 // ✅ CORRECT - Environment variable
 const apiKey = process.env.AI_API_KEY;
@@ -464,13 +448,12 @@ npx tsx 08-agentic-rag-systems/samples/mcp-rag-server/mcp-rag-agent.ts
 - Consult `GLOSSARY.md` for definitions of all course terms
 - Extended samples in chapter `samples/` folders show real-world patterns
 
-### Provider Flexibility
+### Provider Configuration
 
-The course is provider-agnostic:
-- Switch providers by changing `.env` only
-- No code changes required
-- Same examples work with GitHub Models, Azure, or OpenAI
-- Documented in each chapter's README.md
+Examples read credentials from `.env` (never hardcode keys):
+- Use Microsoft Foundry for this course
+- Change `AI_API_KEY`, `AI_ENDPOINT`, `AI_MODEL`, and `AI_EMBEDDING_MODEL` as needed
+- Documented in `00-course-setup/README.md`
 
 ### Testing Best Practices
 
@@ -507,5 +490,4 @@ git commit -m "Your message validate-examples"  # Triggers GitHub Actions
 - [MCP Security Best Practices](https://modelcontextprotocol.io/docs/tutorials/security/authorization)
 - [Course README](./README.md)
 - [Course Glossary](./GLOSSARY.md)
-- [GitHub Models](https://github.com/marketplace/models)
-- [Microsoft Foundry](https://learn.microsoft.com/en-us/azure/ai-foundry/)
+- [Microsoft Foundry](https://learn.microsoft.com/azure/ai-foundry/)

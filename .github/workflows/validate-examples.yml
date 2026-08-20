@@ -45,7 +45,7 @@ jobs:
       - name: Run validation tests
         env:
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
-          AI_ENDPOINT: ${{ secrets.AI_ENDPOINT || 'https://models.inference.ai.azure.com' }}
+          AI_ENDPOINT: ${{ secrets.AI_ENDPOINT }}
           AI_MODEL: ${{ secrets.AI_MODEL || 'gpt-5-mini' }}
           AI_EMBEDDING_MODEL: ${{ secrets.AI_EMBEDDING_MODEL || 'text-embedding-3-small' }}
           AI_API_VERSION: ${{ secrets.AI_API_VERSION || '2025-01-01-preview' }}

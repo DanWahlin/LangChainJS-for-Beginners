@@ -1,17 +1,18 @@
 # Course Setup
 
-Welcome! Before we dive into building AI applications with LangChain.js, let's get your development environment ready. This chapter walks you through installing Node.js, setting up your GitHub token for free AI model access (you can also use Microsoft Foundry), and configuring your project environment. By the end, you'll have everything you need to start building with LangChain.js.
+Welcome! Before we dive into building AI applications with LangChain.js, let's get your development environment ready. This chapter walks you through installing Node.js, setting up Microsoft Foundry for AI model access, and configuring your project environment. By the end, you'll have everything you need to start building with LangChain.js.
 
 ## Prerequisites
 
 - A GitHub account (free)
+- An Azure subscription (for Microsoft Foundry)
 - Basic command line knowledge
 - Text editor or IDE
 
 ## 📋 What You'll Set Up
 
 1. Node.js and npm
-2. GitHub Personal Access Token (for free AI models)
+2. Microsoft Foundry project, models, and API credentials
 3. Project dependencies
 4. Environment variables
 5. VS Code (recommended IDE)
@@ -31,15 +32,18 @@ Choose from one of the following options to set up your development environment:
 1. **GitHub Codespaces**: Use a cloud-based development environment.
 2. **Local Development**: Set up your environment on your machine.
 
+After Codespaces or local setup, continue with **Microsoft Foundry**, `.env` configuration, and the setup test. Those steps are required for both options.
+
 ---
 
 ## GitHub Codespaces
 
 If you prefer not to set up your local environment, you can use **GitHub Codespaces** which is a cloud-based development environment that runs in your browser.
- 
+
 1. **Create a Codespace**: Open the [langchainjs-for-beginners](https://github.com/microsoft/langchainjs-for-beginners) on GitHub and click on the green "Code" button. Select "Open with Codespaces" and "New codespace".
 2. **Wait for Initialization**: It will take a few moments to set up your environment.
 3. **Access the Terminal**: Once ready, open the terminal in Codespaces (Terminal > New Terminal).
+4. **Continue below**: Skip the local Node.js and clone steps. Go to [Set Up Microsoft Foundry](#set-up-microsoft-foundry), then configure `.env` and run the setup test.
 
 ---
 
@@ -111,35 +115,85 @@ tsx myfile.ts
 
 ---
 
-### Step 3: Create GitHub Personal Access Token
+## Set Up Microsoft Foundry
 
-GitHub Models provides free access to powerful AI models—you just need a Personal Access Token.
+This course uses **Microsoft Foundry** for AI models. You can follow the steps below or visit the [Deploy an Azure OpenAI model quickstart](https://learn.microsoft.com/azure/ai-foundry/quickstarts/get-started-code?tabs=azure-ai-foundry).
 
-#### Create Your Token:
+While the course is designed for Microsoft Foundry, you can use any OpenAI-compatible provider. If you choose a different provider, you'll still need an API key and endpoint URL.
 
-1. **Visit**: https://github.com/settings/tokens/new
-2. **Token name**: `langchain-course` (or any name you prefer)
-3. **Expiration**: Choose your preference (90 days recommended for learning)
-4. **Scopes/Permissions**:
-   - ✅ No scopes needed for GitHub Models!
-   - You can leave all checkboxes unchecked
-5. **Click**: "Generate token"
-6. **⚠️ IMPORTANT**: Copy your token now and save it to a text file temporarily! You'll need it in the next step.
+### 1. Create a Microsoft Foundry Project
 
-#### Why GitHub Models?
+1. Visit the [Microsoft Foundry portal](https://ai.azure.com/)
+2. Sign in with your Azure account
+3. Click **+ New project**
+4. Fill in the project details:
+   - **Project name**: `langchain-course` (or your preferred name)
+   - **Subscription**: Select your Azure subscription
+   - **Resource group**: Create new or select existing
+   - **Region**: Choose a region close to you (e.g., East US, West Europe)
+5. Click **Create** (the portal will automatically set up the necessary resources)
 
-- ✅ **Free**: No credit card required
-- ✅ **Powerful**: Access to GPT-4o, GPT-4o-mini, and other models
-- ✅ **Easy**: Use your existing GitHub account
-- ✅ **Learning**: Perfect for this course!
+### 2. Deploy Required Models
+
+You'll need to deploy three models for this course:
+
+**Deploy gpt-5-mini & gpt-5 (Chat Models):**
+
+1. In your project, go to **Models + endpoints** in the left navigation
+2. Click **+ Deploy model** → **Deploy base model**
+3. Search for and select **gpt-5-mini**
+4. Click **Confirm**
+5. Configure deployment:
+   - **Deployment name**: `gpt-5-mini` (keep this name for consistency)
+   - **Model version**: Select the latest available
+   - **Deployment type**: Global Standard
+   - Click **Deploy**
+6. Wait for deployment to complete
+7. Follow the same process and deploy `gpt-5` as well. Note that you may have to complete a form to request access to `gpt-5` if it's not immediately available to deploy.
+
+> [!NOTE]
+> If you cannot deploy `gpt-5`, use **`gpt-4.1`** as a fallback. It is available in Microsoft Foundry and uses the same OpenAI-compatible API. Keep the deployment name `gpt-4.1`, then use that name in the comparison example.
+
+> **Why deploy both chat models?** `gpt-5-mini` is used throughout the course for most examples (it's faster and more cost-effective). `gpt-5` (or `gpt-4.1` if `gpt-5` is unavailable) is used in Chapter 1 for model comparison exercises to demonstrate the performance and capability differences between models.
+
+**Deploy Text Embedding Model:**
+
+1. Click **+ Deploy model** → **Deploy base model** again
+2. Search for and select **text-embedding-3-small**
+3. Click **Confirm**
+4. Configure deployment:
+   - **Deployment name**: `text-embedding-3-small` (keep this name)
+   - **Model version**: Select the latest available
+   - **Deployment type**: Global Standard
+   - Click **Deploy**
+5. Wait for deployment to complete
+
+### 3. Get Your Configuration Values
+
+After deploying your models, you need two pieces of information:
+
+1. **API Key**:
+   - In your project, go to **Overview** in the left navigation
+   - Find **Endpoints and keys**
+   - Locate your **API Key**
+
+2. **Endpoint URL**:
+   - Locate the **Azure OpenAI** → **Azure OpenAI endpoint** value (looks like: `https://your-resource.openai.azure.com`)
+
+### Why Microsoft Foundry?
+
+- ✅ **Production-ready**: Enterprise-grade infrastructure and SLAs
+- ✅ **Higher limits**: More requests per minute than free tiers
+- ✅ **Additional features**: Private endpoints, content filtering, monitoring
+- ✅ **Azure integration**: Works seamlessly with other Azure services
 
 ---
 
-### Step 4: Configure Environment Variables
+## Configure Environment Variables
 
 #### Create `.env` file:
 
-**Mac, Linux, WSL on Windows:**
+**Mac, Linux, WSL on Windows, or GitHub Codespaces:**
 
 ```bash
 cp .env.example .env
@@ -157,26 +211,20 @@ Copy-Item .env.example .env
 
 #### Edit `.env` file:
 
-Open `.env` in your text editor and configure your AI provider.
-
-**For GitHub Models (Free):**
+Open `.env` in your text editor and add your Microsoft Foundry credentials. Add `/openai/v1` to the end of your endpoint URL.
 
 ```bash
-AI_API_KEY=ghp_your_github_token_here
-AI_ENDPOINT=https://models.github.ai/inference
-AI_MODEL=openai/gpt-5-mini
+AI_API_KEY=your_microsoft_foundry_api_key
+AI_ENDPOINT=https://your-resource.openai.azure.com/openai/v1
+AI_MODEL=gpt-5-mini
+AI_EMBEDDING_MODEL=text-embedding-3-small
 ```
 
- > [!TIP]
- > The free `gpt-5-mini` and `gpt-5` Github models can get busy from time to time so if you hit an error using them, try changing the `AI_MODEL` value to `openai/gpt-4.1-mini` or `openai/gpt-4.1`instead.
+**Replace the API key and endpoint with the values from your Microsoft Foundry project.**
 
-**Replace `ghp_your_github_token_here` with your actual GitHub token!**
+---
 
-**Alternative: Microsoft Foundry**
-
-If you have an Azure subscription, you can use Microsoft Foundry for production-grade AI applications. See the [Azure Setup Appendix](./APPENDIX.md#microsoft-foundry-setup) for detailed instructions on deploying models and configuring your environment.
-
-### Step 5: Test Your Setup
+## Test Your Setup
 
 Let's verify everything works!
 
@@ -194,7 +242,7 @@ tsx scripts/test-setup.ts
 🚀 Testing AI provider connection...
 
 ✅ SUCCESS! Your AI provider is working!
-   Provider: https://models.inference.ai.azure.com
+   Provider: https://your-resource.openai.azure.com/openai/v1
    Model: gpt-5-mini
 
 Model response: Setup successful!
@@ -202,13 +250,13 @@ Model response: Setup successful!
 🎉 You're ready to start the course!
 ```
 
-If you see this, you're all set! If not, check the troubleshooting section below.
+If you see this, you're all set! If not, check the [troubleshooting](#troubleshooting) section below.
 
 ---
 
-### Step 6: Install VS Code (Recommended)
+## Install VS Code (Recommended)
 
-While you can use any text editor, we recommend **Visual Studio Code** for the best experience.
+While you can use any text editor, we recommend **Visual Studio Code** for the best experience. Skip this step if you are using GitHub Codespaces.
 
 #### Install VS Code:
 
@@ -220,13 +268,13 @@ While you can use any text editor, we recommend **Visual Studio Code** for the b
 
 Before starting the course, make sure you have:
 
-- [ ] Node.js LTS installed
-- [ ] Project cloned and dependencies installed (`npm install`)
-- [ ] tsx installed globally (`npm install -g tsx`)
-- [ ] GitHub Personal Access Token created if you're using GitHub Models. If you're using Microsoft Foundry, ensure your models are deployed and you have your API key and endpoint.
-- [ ] `.env` file configured with your token (or key if using Microsoft Foundry) and endpoint
+- [ ] Node.js LTS installed (local development) or a Codespace ready
+- [ ] Project cloned and dependencies installed (`npm install`) if working locally
+- [ ] tsx installed globally (`npm install -g tsx`) if working locally
+- [ ] Microsoft Foundry project created with `gpt-5-mini`, `gpt-5`, and `text-embedding-3-small` deployed
+- [ ] `.env` file configured with your Microsoft Foundry API key, endpoint, and model names
 - [ ] Test script runs successfully
-- [ ] VS Code installed (optional but recommended)
+- [ ] VS Code installed (optional but recommended for local development)
 
 ---
 
@@ -240,7 +288,7 @@ You're all set! Time to build your first AI application.
 
 ## 📚 Additional Resources
 
-- [GitHub Models Documentation](https://github.com/marketplace/models)
+- [Microsoft Foundry Documentation](https://learn.microsoft.com/azure/ai-foundry/)
 - [Node.js Documentation](https://nodejs.org/docs/latest/api/)
 - [Environment Variables Best Practices](https://www.npmjs.com/package/dotenv)
 
@@ -249,6 +297,41 @@ You're all set! Time to build your first AI application.
 ## 🗺️ Navigation
 
 [Back to Main](../README.md) | [Next: Introduction to LangChain.js →](../01-introduction/README.md)
+
+---
+
+## 🐛 Troubleshooting
+
+### Issue: "Cannot find module '@langchain/openai'"
+
+**Solution**: Run `npm install` in the project directory
+
+### Issue: "AI_API_KEY not found" or "AI_ENDPOINT not found"
+
+**Solutions**:
+1. Make sure `.env` file exists in the project root
+2. Check that `.env` contains all required variables:
+   - `AI_API_KEY=your_key`
+   - `AI_ENDPOINT=your_endpoint_url`
+   - `AI_MODEL=gpt-5-mini`
+   - `AI_EMBEDDING_MODEL=text-embedding-3-small`
+3. No quotes needed around the values
+4. No spaces before or after the `=`
+
+### Issue: "401 Unauthorized" or "Invalid API key"
+
+**Solutions**:
+1. Copy a fresh API key from your Microsoft Foundry project
+2. Make sure you copied the entire key
+3. Confirm `AI_ENDPOINT` includes `/openai/v1` at the end
+4. Check for extra spaces in the `.env` file
+
+### Issue: Rate limit errors
+
+**Solution**: Microsoft Foundry deployments have rate limits. If you hit them:
+- Wait a few minutes and retry
+- Check your deployment quota in the Microsoft Foundry portal
+- Use `gpt-5-mini` for most examples to stay within limits
 
 ---
 

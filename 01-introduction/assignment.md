@@ -65,8 +65,8 @@ import "dotenv/config";
 
 **Tasks**:
 1. Create a file called `model-performance.ts`
-2. Test at least 2 models available on GitHub Models:
-   - `gpt-5`
+2. Test at least 2 models available in Microsoft Foundry:
+   - `gpt-5` (or gpt-4.1 if that's what you deployed earlier)
    - `gpt-5-mini`
 3. For each model, measure:
    - Response time

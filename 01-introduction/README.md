@@ -1,6 +1,6 @@
 # Introduction to LangChain.js
 
-Welcome to your first step in building AI-powered applications with LangChain.js! In this chapter, you'll learn what LangChain.js is and why it exists, explore its core concepts like models, prompts, and tools, and make your first AI call using GitHub Models. By the end, you'll understand how LangChain.js provides a consistent interface across different AI providers, making it easy to switch between them with just environment variables.
+Welcome to your first step in building AI-powered applications with LangChain.js! In this chapter, you'll learn what LangChain.js is and why it exists, explore its core concepts like models, prompts, and tools, and make your first AI call using Microsoft Foundry. By the end, you'll understand how LangChain.js provides a consistent interface for working with models through environment variables.
 
 ## Prerequisites
 
@@ -13,7 +13,7 @@ By the end of this chapter, you'll be able to:
 - ✅ Understand what LangChain.js is and why it exists
 - ✅ Recognize common AI application patterns
 - ✅ Set up a development environment
-- ✅ Make your first LLM call using GitHub Models
+- ✅ Make your first LLM call using Microsoft Foundry
 
 ---
 
@@ -99,7 +99,7 @@ flowchart LR
 
 ## 💻 Hands-On: Your First LLM Call
 
-Let's make your first AI call using LangChain.js and GitHub Models!
+Let's make your first AI call using LangChain.js and Microsoft Foundry!
 
 ### Example 1: Hello World
 
@@ -199,7 +199,7 @@ We read these from environment variables (`AI_MODEL`, `AI_ENDPOINT`, `AI_API_KEY
 - `AI_ENDPOINT` tells the application where to find the AI service
 - `AI_API_KEY` provides authentication credentials
 
-Storing these in `.env` means you can switch between providers (GitHub Models, Azure, OpenAI) by changing just the configuration file, not your code. It's like changing a phone number in your contacts. Same calling process, different destination.
+Storing these in `.env` means you can change Microsoft Foundry endpoints, keys, and models by updating the configuration file, not your code. It's like changing a phone number in your contacts. Same calling process, different destination.
 
 ---
 
@@ -286,7 +286,7 @@ When you run this example with `tsx 01-introduction/code/02-message-types.ts`, y
 
 ## 🔄 Comparing Models
 
-GitHub Models gives you access to multiple AI models. Let's compare them!
+Microsoft Foundry gives you access to multiple AI models. Let's compare them!
 
 **You're building an app and need to choose which model to use.** Should you use `gpt-5` (more capable but costlier) or `gpt-5-mini` (faster and cheaper)?
 
@@ -297,7 +297,7 @@ Think of it like choosing between calculators: a scientific calculator handles c
 Let's see how to programmatically compare different models side-by-side. 
 
 > [!NOTE]
-> If you run this using Microsoft Foundry, you'll need to have both `gpt-5` and `gpt-5-mini` deployed as described in the [Microsoft Foundry Setup](../00-course-setup/APPENDIX.md#microsoft-foundry-setup) section.
+> You'll need both `gpt-5` (or another model like gpt-4.1) and `gpt-5-mini` deployed in Microsoft Foundry as described in [Course Setup](../00-course-setup/README.md#set-up-microsoft-foundry).
 
 **Code**: [`code/03-model-comparison.ts`](./code/03-model-comparison.ts)  
 **Run**: `tsx 01-introduction/code/03-model-comparison.ts`
@@ -393,14 +393,6 @@ Response: Recursion is when a function calls itself to solve a problem by breaki
 
 ---
 
-## 🔄 Switching to Microsoft Foundry
-
-**Want to use Microsoft Foundry instead of GitHub Models?** All the code you just wrote will work with zero changes!
-
-Simply update your `.env` file with your Azure endpoint and API key. For detailed setup instructions, see the [Microsoft Foundry Setup](../00-course-setup/APPENDIX.md#microsoft-foundry-setup).
-
----
-
 ## 🗺️ Concept Map
 
 This chapter introduced you to the core concepts of LangChain.js:
@@ -413,8 +405,7 @@ graph LR
     A --> E[Agents]
     A --> F[Memory]
     B --> G[Provider Abstraction]
-    G --> H[GitHub Models]
-    G --> I[Microsoft Foundry]
+    G --> H[Microsoft Foundry]
 ```
 
 *These concepts work together to create powerful AI applications. You'll explore each in depth throughout the course.*
@@ -453,8 +444,7 @@ Let's review what you learned:
 
 - **LangChain.js is an abstraction layer** - It provides a consistent interface across different LLM providers
 - **Built on composable components** - Models, prompts, tools, agents, and memory work together
-- **GitHub Models offers free access** - Perfect for learning and prototyping
-- **Microsoft Foundry is production-ready** - Switch anytime by changing the environment variables in your `.env` file
+- **Microsoft Foundry provides the models** - Configure `AI_API_KEY`, `AI_ENDPOINT`, and `AI_MODEL` in your `.env` file
 - **Messages have types** - SystemMessage, HumanMessage, and AIMessage serve different purposes
 
 ---
@@ -471,9 +461,9 @@ The assignment includes:
 
 ## 📚 Additional Resources
 
-- [LangChain.js Concepts](https://js.langchain.com/docs/concepts/)
-- [GitHub Models Marketplace](https://github.com/marketplace/models)
-- [Chat Models Documentation](https://js.langchain.com/docs/integrations/chat/)
+- [LangChain.js Concepts](https://js.langchain.com/docs/concepts)
+- [Microsoft Foundry Documentation](https://learn.microsoft.com/azure/foundry)
+- [Chat Models Documentation](https://js.langchain.com/docs/integrations/chat)
 
 **💡 Want more examples?** Check out the [`samples/`](./samples/) folder for additional code examples that demonstrate other useful concepts and patterns!
 
